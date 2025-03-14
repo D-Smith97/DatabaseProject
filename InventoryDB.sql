@@ -26,6 +26,10 @@ CREATE TABLE Currency (
     SwiftCode VARCHAR(11) NOT NULL,
     ExchangeRate DECIMAL(10, 4) NOT NULL
 );
+CREATE TABLE Department (
+    DepartmentID INT AUTO_INCREMENT PRIMARY KEY,
+    DepartmentName VARCHAR(50) NOT NULL
+);
 CREATE TABLE Users (
     UserID INT AUTO_INCREMENT PRIMARY KEY,
     UserCode VARCHAR(50) NOT NULL,
@@ -33,11 +37,12 @@ CREATE TABLE Users (
     HRID VARCHAR(50) NOT NULL, -- ID Provided by HR, not auto generated
     CostCodeID INT NOT NULL,
     Email VARCHAR(50) NOT NULL,
-    Department VARCHAR(50),
+    DepartmentID VARCHAR(50) NOT NULL,
     LocationID INT NOT NULL,
     StartDate DATE,
     TermDate DATE,
     FOREIGN KEY (CostCodeID) REFERENCES CostCode(CostCodeID),
+    FOREIGN KEY (DepartmentID) REFERENCES Department (DepartmentID),
     FOREIGN KEY (LocationID) REFERENCES Location(LocationID)
 );
 CREATE TABLE Vendor (
@@ -80,7 +85,7 @@ CREATE TABLE Service (
     ServiceName VARCHAR(255) NOT NULL,
     VendorID INT NOT NULL,
     AccountID INT NOT NULL,
-    ContractID INT NOT NULL,
+    ContractID INT NOT NULL, -- this may not be needed as the contractid
     Platform VARCHAR(100),
     Notes TEXT,
     FOREIGN KEY (VendorID) REFERENCES Vendor(VendorID),
